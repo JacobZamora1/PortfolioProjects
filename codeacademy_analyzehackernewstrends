@@ -1,0 +1,73 @@
+/*The table used is called "hacker_news" and is from the Codeacademy database.
+    The data used in "hacker_news" was made publicaly available under the MIT license.
+    https://opensource.org/license/mit-0/ 
+    All queries were done through the Codeacademy website.
+*/
+
+select * 
+from hacker_news
+
+/* This query returns all the columns in the table "hacker_news"
+    title - title of story
+    user - who submitted story
+    score- score of the story
+    timestamp - time of story
+    url - link of story
+*/
+
+--Top 5 Hacker News stories
+select title, score
+from hacker_news
+order by score desc
+limit 5;
+
+--Does Hacker News follow the 1-9-90 rule?
+
+--Finding the total score of all stories. sum(score) = 6366
+select sum(score)
+from hacker_news;
+--Users who have accumulated more than 200 points using score column. Only 4 users.
+select user, sum(score)
+from hacker_news
+group by user
+having sum(score) > 200
+order by 2 desc;
+--Added users scores together and divide by the total sum. =22%
+select (517 + 309 + 304 + 282)/6366.0;
+
+--Finding users who posted false information in the form of a link. The url is https://www.youtube.com/watch?v=dQw4w9WgXcQ
+--two users found
+select user, count(*)
+from hacker_news
+where url like '%watch?v=dQw4w9WgXcQ%'
+group by 1 
+order by 2 desc;
+
+--Finding which sites feed into Hacker News the most
+select case
+    when url like %github.com% then 'Github'
+    when url like %medium.com% then 'Medium'
+    when url like %nytimes.com% then 'New York Times'
+    else 'Other'
+    End as 'Source'
+from hacker_news;
+--Adding column for the number of stories from each url using count. GitHub = 23, Medium = 12, NYtimes = 13
+select case
+    when url like %github.com% then 'Github'
+    when url like %medium.com% then 'Medium'
+    when url like %nytimes.com% then 'New York Times'
+    else 'Other'
+    End as 'Source',
+    count(*)
+from hacker_news
+group by 1;
+
+--Calculating best time to post story. Best hours to post are around 7 am and around 6-8 pm.
+select
+    strftime('%H', timestamp) as 'Hour',
+    round(avg(score)) as 'Average Score',
+    count(*) as 'Number of Stories'
+from hacker_news
+where timestamp is not null
+group by 1
+order by 1;

@@ -1,0 +1,66 @@
+/*The tables used are:
+    "trips" - trip information
+    "riders" - user data
+    "cars" -automomous cars
+    These tables are from the Codeacademy database.
+    All queries were done through the Codeacademy website using SQLite
+*/
+
+select *
+from trips;
+/* Columns found in 'trips' are:
+    id
+    date
+    pickup
+    dropoff
+    rider_id
+    car_id
+    type
+    cost
+*/
+
+select * 
+from riders;
+/* Columns found in 'riders' are:
+    id
+    first
+    last
+    username
+    ratin
+    total_trips
+    referred
+*/
+
+select * 
+from cars;
+/* Columns found in 'trips' are:
+    id
+    model
+    OS
+    status
+    trips_completed
+*/
+
+--Primary of 'trips', 'rider', and 'cars' is 'id'
+
+--Creating a Trip Log between 'trips' and 'riders' using a left Join clause
+select trips.date, trips.pickup, trips.dropoff, trips.type, trips.cost,
+riders.first, riders.last, riders.username
+from trips
+left join riders
+    on trips.rider_id = riders.id;
+
+--Creating a table between 'trips' and 'cars' using inner join
+
+select *
+from trips
+join cars 
+    on trips.car_id = cars.id;
+
+--Combining 'riders' table on top of new table named 'riders2'
+
+select *
+from riders
+union
+select *
+from riders2;

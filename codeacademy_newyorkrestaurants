@@ -1,0 +1,106 @@
+/* The table used is called "nomnom" and is from the Codeacademy database.
+    All queries were done through the Codeacademy website.
+*/
+
+select *
+from nomnom;
+
+/*The column names found in table nomnom are: 
+    name
+    neighborhood
+    cuisine
+    review
+    price
+    health */
+
+select distinct neighborhood
+from nomnom:
+
+/* The neigborhoods found in the table nomnom are: 
+    Brooklyn
+    Midtown
+    Chinatown
+    Uptown
+    Queens
+    Downtown
+*/
+
+select distinct cuisine
+from nomnom;
+
+/* The neigborhoods found in the table nomnom are: 
+    Steak
+    Korean
+    Chinese
+    Pizza
+    Ethiopian
+    Vegetarian
+    Italian
+    Japanese
+    American
+    Mediterranean
+    Indian
+    Soul Food
+    Mexican
+*/
+
+select *
+from nomnom
+where cuisine = 'Chinese';
+
+/* Returned all restaurants categorized as "Chinese" under the "cuisine" column.
+*/
+
+select *
+from nomnom
+where review >= 4;
+
+/* Returned all restaurants with a review greater than or equal to 4.
+*/
+
+select *
+from nomnom
+where name like '%meatball%';
+
+/* Returned all restaurants where name contains "meatball".
+*/
+select *
+from nomnom
+where neighborhood = 'Midtown'
+   OR neighborhood = 'Downtown'
+   OR neighborhood = 'Chinatown'; 
+
+
+/* Returned all restaurants within the neighborhoods Midtown,
+    Downtown, and Chinatown.
+*/
+
+select *
+from nomnom
+where health IS NULL;
+
+/* Returned all restaurants with a pending health grade.
+*/
+select *
+from nomnom
+order by review desc
+limit 10;
+
+/* Returned all top ten restaurants based on review.
+*/
+
+select name,
+ case
+  when review > 4.5 then 'Extraordinary'
+  when review > 4 then 'Excellent'
+  when review > 3 then 'Good'
+  when review > 2 then 'Fair'
+  else 'Poor'
+ end as 'Review'
+from nomnom;
+
+/* Returned name of restaurants with the review changed to Extraordinary, Excellent,
+    Good, Fair, or Poor based on the value of the Review coloumn. The new column
+    created was named "Review".
+*/
+

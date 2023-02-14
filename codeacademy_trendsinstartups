@@ -1,0 +1,65 @@
+/*The table used is called "startups" and is from the Codeacademy database.
+    All queries were done through the Codeacademy website.
+*/
+
+select *
+from startups;
+
+/* This query returns all the columns in the table "startups"
+    name
+    location
+    category
+    eployees
+    raised
+    valuation
+    founded
+    stage
+    ceo
+    info
+*/
+
+--Calculating total number of companies
+select count(*)
+from startups;
+
+--Calculating total value of all companies in table using the valuation coloumn.
+select sum(valuation)
+from startups;
+
+--Calculating the highest amount raised by a startup using the raised column.
+select max(raised)
+from startups;
+
+--Calculating max amount raised during "Seed" stage.
+select max(raised)
+from startups
+where stage = 'Seed';
+
+--Average valuation in each category using group by function.
+select category, avg(valuation)
+from startups
+group by category;
+
+--Rounding average valuation in each category.
+select category, avg(valuation)
+from startups
+group by 1
+order by 2 desc;
+
+--Finding out what are the most competitive markets. The most competitive are Social, Mobile, and Education.
+select category, count(*)
+from startups
+group by category
+having count(*) > 3
+order by 2 desc;
+
+--Finding differences in startups sizes(employees) based on location.
+select location, avg(employees)
+from startups
+group by location;
+
+--Average size of startups in each location higher than 500 using having clause.
+select location, avg(employees)
+from startups
+group by location
+having avg(employees) > 500;
